@@ -1,4 +1,4 @@
-import SineWaves from "sine-waves";
+/*import SineWaves from "sine-waves";
 
 // const SineWave = ()
 
@@ -59,3 +59,4 @@ export const initSinewave = () => {
     },
   });
 };
+*/

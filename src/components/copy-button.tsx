@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { DropdownMenuTriggerProps } from "@/components/ui/react-dropdown-menu";
+//import { DropdownMenuTriggerProps } from "@/components/ui/react-dropdown-menu";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import { NpmCommands } from "types/unist";
 import { Toaster, toast } from "sonner";
@@ -9,12 +9,6 @@ import { Toaster, toast } from "sonner";
 import { Event } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   value: string;

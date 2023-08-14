@@ -3,7 +3,7 @@
 import * as React from "react";
 //import { DropdownMenuTriggerProps } from "@/components/ui/react-dropdown-menu";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
-import { NpmCommands } from "types/unist";
+//import { NpmCommands } from "types/unist";
 import { Toaster, toast } from "sonner";
 
 import { Event } from "@/lib/events";

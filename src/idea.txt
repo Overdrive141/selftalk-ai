@@ -1,0 +1,32 @@
+navbar:
+
+
+selftalk.ai                                                       
+
+
+
+
+
+                    SelfTalkAI fades in when user lands on the page
+
+                Audio wave animation plays behind the self talk ai hero
+
+                Scroll Down to 3 Main Usecases
+
+                3 Step Process
+
+                Privacy -> We never store any of your personal information or voice. All voice is trained and kept on external. No data is used 
+
+                Look at Danny Ma's landing page conversions & look on twitter threads for SEO
+
+                At the end there would be a coming soon button. 
+
+                Interested? Get yourself on the waiting list: 
+
+                Footer
+
+                selftalk.ai All Rights Reserved. Copyright @ 141 Studios
+
+
+
+=> CTAs should have a pulse animation or a rotating color around it (Twitter Dillon or dev resources has some craft resurces). It attracts customers attentions

@@ -48,9 +48,9 @@ const HeroScroll = () => {
     return position === 1 ? "relative" : "fixed";
   });
 
-  const DynamicSinewave = dynamic(() => import("@/components/ui/sinewave"), {
-    ssr: false,
-  });
+  //const DynamicSinewave = dynamic(() => import("@/components/ui/sinewave"), {
+   // ssr: false,
+  //});
 
   return (
     <>

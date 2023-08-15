@@ -20,10 +20,7 @@ export async function GET() {
         }}
       >
 
-        <div
-         // style={{ scale, x: "-50%", position }}
-          className="left-1/2 z-10 flex flex-col items-center relative w-full"
-        >
+        <div tw="left-1/2 z-10 flex flex-col items-center relative w-full">
       
           <h1 tw="text-center font-semibold font-heading text-3xl leading-[1]">
             SelfTalk <span className="text-zinc-500"> AI</span>

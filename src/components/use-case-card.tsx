@@ -34,8 +34,8 @@ export default function UseCaseCard({
 }: CardProps) {
   return (
     <Card className={cn("border-none", className)}>
-      <CardHeader className="space-y-4">
-        <div className="align-center item-center flex flex-row gap-3 md:flex-col md:gap-4">
+      <CardHeader className="space-y-4 max-w-xs">
+        <div className="align-center item-center flex flex-row gap-3 md:gap-4">
           <CardTitle className=" font-book font-styling font-display md:leading-none text-xl leading-[100%] text-slate-12">
             {title}
           </CardTitle>

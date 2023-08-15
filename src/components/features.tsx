@@ -74,24 +74,28 @@ const usecaseData = [
 
 const features = [
   {
+    key: 1,
     title: "Instant Feedback",
     description:
       "Powered by state-of-the-art AI LLM models, SelfTalk AI ensures minimal latency for an almost real-time conversation experience.",
     body: "Note: We're constantly expanding our linguistic capabilities. For now, we only support English.",
   },
   {
+    key: 2,
     title: "Reflect & Re-engage",
     description:
       "Your past dialogues aren't just memories. Revisit them to dive deeper or gain clarity on prior thoughts.",
     body: "",
   },
   {
+    key: 3,
     title: "Unwavering Privacy Commitment",
     description:
       "Your trust is paramount. All audio recordings are encrypted, ensuring your conversations remain private.",
     body: "",
   },
   {
+    key: 4,
     title: "Rooted in Research",
     description:
       "Benefit from insights and methodologies grounded in rigorous research and user-centric design.",
@@ -117,44 +121,51 @@ function DemoContainer({
 const Features = () => {
   const { ref, inView, entry } = useInView({
     /* Optional options */
-    threshold: 0,
+    // threshold: 0.2,
+    threshold: 0.5,
+    triggerOnce: true,
   });
 
   return (
-    <div
-      ref={ref}
-      className="w-full px-5 md:pt-10  md:pb-5 items-center justify-center bg-backlight-gradient from-backlightCenter to-backlightEdge"
-    >
-      {inView && (
+    <div className="w-full px-5 items-center justify-center bg-backlight-gradient from-backlightCenter to-backlightEdge">
+      <div className="py-12 md:py-20">
+        {/* {inView && ( */}
         <>
           {/* <h1 className="p-8 text-4xl animate-fade animate-once">
             What can you get?
           </h1> */}
-          <h1 className="relative z-20 mb-12 max-w-lg text-[1.5rem] md:text-[3rem] tracking-tight leading-[120%] font-gradient">
-            What we can offer you
+          <h1 className="relative z-20 p-10 text-center md:text-left text-3xl md:text-4xl xl:text-3xl tracking-tight leading-[120%] font-gradient animate-fade animate-once">
+            Empowerment Tools for Self-Reflection
           </h1>
-          <div className="relative z-20 mt-12 grid w-full grid-cols-1 gap-12 sm:grid-cols-2 md:flex-row md:gap-20 lg:grid-cols-4">
+          <div
+            ref={ref}
+            className="p-10 relative z-20 mt-12 grid w-full grid-cols-1 gap-12 sm:grid-cols-2 md:flex-row md:gap-20 lg:grid-cols-4"
+          >
             {/* <div className="flex flex-col md:flex-row items-start justify-center gap-6 rounded-lg p-8"> */}
             {/* <div className="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4"> */}
-            {features.map((usecase, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border  animate-fade-up animate-once animate-delay-[500ms] flex w-full flex-col gap-3 md:gap-2"
-              >
-                <DemoContainer>
-                  <UseCaseCard
-                    className="bg-transparent"
-                    title={usecase.title}
-                    description={usecase.description}
-                    body={usecase.body}
-                  />
-                </DemoContainer>
-              </div>
-            ))}
+            {inView &&
+              features.map((feature, idx) => (
+                <div
+                  key={feature.key}
+                  className={`rounded-xl border bg-accent/20 shadow-2xl animate-fade-up animate-once flex w-full flex-col gap-3 md:gap-2 animate-delay-[${
+                    feature.key * 500
+                  }ms]`}
+                >
+                  <DemoContainer>
+                    <UseCaseCard
+                      className="bg-transparent"
+                      title={feature.title}
+                      description={feature.description}
+                      body={feature.body}
+                      icon={undefined}
+                    />
+                  </DemoContainer>
+                </div>
+              ))}
             {/* </div> */}
           </div>
         </>
-      )}
+      </div>
     </div>
   );
   // Use Cases Cards 3 Step Process

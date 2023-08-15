@@ -1,4 +1,5 @@
 import Contact from "@/components/contact";
+import Faq from "@/components/faq";
 import Features from "@/components/features";
 import HeroScroll from "@/components/hero";
 import Steps from "@/components/steps";
@@ -13,6 +14,7 @@ export default function Home() {
       <UseCases />
       <Steps />
       <Features />
+      <Faq />
       <Contact />
     </>
   );

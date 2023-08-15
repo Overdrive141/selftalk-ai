@@ -10,7 +10,7 @@ type CardProps = {
   description: string;
   body: string;
   className: string | undefined;
-  image: ImageProps | undefined;
+  image: string;
 };
 
 export default function CardWithImage({
@@ -22,7 +22,7 @@ export default function CardWithImage({
   image,
 }: CardProps) {
   return (
-    <div className="max-w-sm  border border-gray-200 rounded-lg shadow bg-gray-800 dark:border-gray-700 rounded-xl  animate-fade-up animate-once animate-delay-[500ms] flex w-full flex-col gap-3 md:gap-2">
+    <div className="max-w-sm  border border-gray-200 rounded-lg shadow bg-accent dark:border-gray-700 rounded-xl animate-fade-up animate-once animate-delay-[500ms] flex w-full flex-col gap-3 md:gap-2">
       <a href="#" className="cursor-default overflow-hidden">
         <Image
           className="rounded-t-lg object-cover h-[200px]"

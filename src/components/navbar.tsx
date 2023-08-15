@@ -18,7 +18,7 @@ export default async function Navbar() {
             className="mr-2 flex w-full items-center justify-start md:w-auto lg:mr-6 gap-1"
           >
             {/* <LogoSquare /> */}
-            <div className="ml-2 flex-none text-sm font-medium lowercase font-inter tracking-widest md:hidden lg:block">
+            <div className="ml-2 flex-none text-sm font-medium lowercase font-inter tracking-widest lg:block">
               Selftalk{"  "}
             </div>
             <div className="text-muted-foreground font-medium">{"  "}ai</div>

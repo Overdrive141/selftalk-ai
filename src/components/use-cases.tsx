@@ -61,25 +61,27 @@ const UseCases = () => {
   const { ref, inView, entry } = useInView({
     /* Optional options */
     threshold: 0.2,
+    triggerOnce: true,
   });
 
   return (
-    <div
-      ref={ref}
-      className="mt-[100vh] lg:mt-[90vh] h-[250vh] lg:h-[100vh] w-full items-center justify-center bg-backlight-gradient from-backlightCenter to-backlightEdge"
-    >
+    <div className="mt-[100vh] w-full items-center justify-center bg-backlight-gradient from-backlightCenter to-backlightEdge">
       <div className="w-full h-[150px] from-black to-backlightEdge"></div>
-      <div className="px-10">
-        {inView && (
-          <>
-            {/* <h1 className="p-8 text-2xl lg:text-4xl animate-fade animate-once animate-delay-500"> */}
-            <h1 className="relative z-20 mb-12 max-w-lg text-[1.5rem] md:text-[3rem] tracking-tight leading-[120%] font-gradient">
-              Where can we help?
-            </h1>
-            <div className="relative z-20 mt-12 grid w-full grid-cols-1 gap-12 sm:grid-cols-2 md:flex-row md:gap-20 lg:grid-cols-3 px-8">
-              {/* <div className="flex flex-col md:flex-row items-start justify-center gap-6 rounded-lg p-8"> */}
-              {/* <div className="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4"> */}
-              {usecaseData.map((usecase, idx) => (
+      <div className="px-10 flex flex-col md:block">
+        <>
+          {/* <h1 className="p-8 text-2xl lg:text-4xl animate-fade animate-once animate-delay-500"> */}
+          <h1 className="relative z-20 p-10 text-center md:text-left text-3xl md:text-4xl xl:text-3xl tracking-tight leading-[120%] font-gradient animate-fade animate-once">
+            Discover the Power of Self-Talk
+          </h1>
+          <div
+            ref={ref}
+            className="flex flex-col max-w-sm md:max-w-none relative z-20 mt-12 self-center justify-center md:grid w-full grid-cols-1 gap-12 md:grid-cols-2 md:flex-row md:gap-20 lg:grid-cols-3 px-8"
+          >
+            {/* <div className="flex flex-col md:flex-row items-start justify-center gap-6 rounded-lg p-8"> */}
+            {/* <div className="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4"> */}
+
+            {inView &&
+              usecaseData.map((usecase, idx) => (
                 <CardWithImage
                   key={idx}
                   className="bg-transparent"
@@ -89,13 +91,12 @@ const UseCases = () => {
                   image={usecase.image || undefined}
                 />
               ))}
-            </div>
-            {/* </div> */}
-            <h1 className="p-8 text-xl animate-fade animate-once animate-delay-[1700ms]">
-              and many more...
-            </h1>
-          </>
-        )}
+          </div>
+          {/* </div> */}
+          <h1 className="p-8 text-xl animate-fade animate-once animate-delay-[1700ms]">
+            and many more...
+          </h1>
+        </>
       </div>
     </div>
   );

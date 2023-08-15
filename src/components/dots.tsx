@@ -1,3 +1,5 @@
+"use client";
+
 // DotBackground.tsx
 
 import React from "react";
@@ -23,7 +25,7 @@ const DotBackground: React.FC = () => {
           cy={`${i * spacing}px`}
           r="1"
           className="fill-current text-white animate-pulse animate-infinite"
-          style={{ animationDelay: `${delay}s` }}
+          // style={{ animationDelay: `${delay}s` }}
         />
       );
     }

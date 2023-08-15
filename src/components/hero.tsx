@@ -48,9 +48,9 @@ const HeroScroll = () => {
     return position === 1 ? "relative" : "fixed";
   });
 
-  //const DynamicSinewave = dynamic(() => import("@/components/ui/sinewave"), {
-   // ssr: false,
-  //});
+  // const DynamicSinewave = dynamic(() => import("@/components/ui/sinewave"), {
+  //   ssr: false,
+  // });
 
   return (
     <>
@@ -68,13 +68,18 @@ const HeroScroll = () => {
             by 141 Studios ,
             <br />
           </p> */}
-          <h1 className="animate-fade mb-12 text-center font-semibold fade-in-95 font-heading text-3xl leading-[1]">
+          <h1 className="animate-fade  text-center font-semibold fade-in-95 font-heading text-3xl leading-[1]">
             SelfTalk <span className="text-zinc-500"> AI</span>
             {/* <br /> reimagined. */}
           </h1>
-          <h2 className="text-muted-foreground animate-fade animate-delay-300">
+          <h2 className="mb-12 mt-5 text-muted-foreground animate-fade animate-delay-300">
             Seek guidance from within
           </h2>
+
+          {/* <h2 className="mb-12 mt-5 text-2xl text-center text-foreground max-w-lg animate-fade animate-delay-300">
+            Dive deep into self-reflection, boosted confidence, and personal
+            growth
+          </h2> */}
 
           <AudioWave />
           <Link

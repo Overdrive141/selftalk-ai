@@ -26,11 +26,11 @@ const Contact = () => {
       />
       {inView && (
         <div className="h-full gap-2 px-10 animate-fade animate-once">
-          <div className="flex flex-col self-start gap-4 h-[200px] md:h-[300px]">
-            <h1 className="relative z-20 px-10 text-center md:text-left text-3xl md:text-4xl xl:text-3xl tracking-tight leading-[120%] font-gradient animate-fade animate-once">
+          <div className="flex flex-col gap-4 h-[200px] md:h-[300px]">
+            <h1 className="relative z-20 px-10 text-center sm:text-left text-3xl md:text-4xl xl:text-3xl tracking-tight sm:leading-[120%] font-gradient animate-fade animate-once">
               Reserve Your Voice in AI
             </h1>
-            <p className="text-muted-foreground px-10 max-w-">
+            <p className="text-muted-foreground text-sm md:text-base text-left px-0 md:px-10 pt-2 md:pt-0">
               Reserve your place & become a pioneer in a revolutionary approach
               to self-improvement.
             </p>

@@ -69,7 +69,7 @@ export default function Waitlist() {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-10 md:mt-0">
       {!isSubmitted ? (
         // <div className="flex flex-col md:flex-row w-full justify-center">
         <Form {...form}>

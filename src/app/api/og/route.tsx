@@ -31,7 +31,7 @@ export async function GET() {
           </h2>
         </div>
 
-         
+         </div>
         
        
     ),

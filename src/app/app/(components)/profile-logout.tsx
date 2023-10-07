@@ -13,7 +13,11 @@ export default async function ProfileLogout() {
   //   if (!session?.user) {
   //     redirect("/login");
   //   }
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore,
+  });
 
   const {
     data: { session },

@@ -54,7 +54,10 @@ export async function POST(request: Request) {
     const audioResponseBuffer = await response.arrayBuffer();
     const audioBuffer = Buffer.from(audioResponseBuffer);
 
-    const supabase = createRouteHandlerClient<Database>({ cookies: cookies });
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient<Database>({
+      cookies: () => cookieStore,
+    });
 
     const {
       data: { session },

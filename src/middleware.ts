@@ -11,13 +11,20 @@ export async function middleware(request: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
 
-  res.headers.set("x-middleware-cache", "no-cache"); // Disables middleware caching
+  // Dont remember why I added this
+  // res.headers.set("x-middleware-cache", "no-cache"); // Disables middleware caching
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // console.log(request.nextUrl.pathname.split("/")[1]);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  console.log(user);
+
+  console.log("Session ", session);
 
   // if user is signed in and the current path is / redirect the user to /account
   if (user && request.nextUrl.pathname.split("/")[1] !== "app") {

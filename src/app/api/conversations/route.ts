@@ -53,7 +53,10 @@ export async function POST(request: Request) {
     // TODO: Insert a conversationId
     // For now create one for personal assistant in db and add its ID here
 
-    const supabase = createRouteHandlerClient<Database>({ cookies: cookies });
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient<Database>({
+      cookies: () => cookieStore,
+    });
 
     const requestBody = await request.json();
     console.log("Request Body", requestBody);

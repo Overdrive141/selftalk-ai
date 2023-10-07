@@ -8,7 +8,10 @@ export async function GET(request: Request) {
   try {
     const conversationTypeId = 1; // get this from Params later
 
-    const supabase = createRouteHandlerClient<Database>({ cookies: cookies });
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient<Database>({
+      cookies: () => cookieStore,
+    });
 
     const {
       data: { session },

@@ -1,3 +1,52 @@
+Idea for 18th August:
+
+- Dashboard
+    - Left side has past conversations
+    - On first login on dashboard, shows a modal taking user through the training process
+    - First wizard shows: Welcome, we will take you through the training process to register your voice.
+    - CLick  get started
+    - Step 2: 
+        Instructions, click the mic button when you are ready
+        When they click it, start showing a paragraph and highlight individual words as they speak them
+        (have to research if I can match user's voice to highlighted words effectively otherwise have to do it on a time to time basis)
+        Once the voice registration is complete show them UI. Complete or start again
+    - Click register
+    - Give loading indicator and while that is happening, use it to train the AI
+    - In the backend it should attach that person's AI voice to their userid/uuid
+
+- Now we can give them prebuilt templates for confidence/therapy sections
+- Maybe there can be 2 Tabs. Confidence/therapy
+- And inside those tabs there will be different buttons with images and info so user can select that they want to build confidence
+- These will have prompts behind them and once they select a template then they can have conversations with themselves
+- Need to research the cost of ElevenLabs and how much this will cost
+
+- The brain works like LLMs. 
+- Prompts is self talk to reframe difficult things in a different light
+- Mastering the prompts mean learning new ways to reframe your mind.
+- If you ask it nicely, it will give you better results
+- (Idea from Chris Williamson and Shan Puri 1:05:00)
+
+- Fitness Reframe & New Skill Reframe:
+  1. You dont plant the seed and dig it up the next day: Are you growing, are you growing?
+  2. No, you plant the seed but just water it, you just water it. You know that plant will take time to sprout. You dont just dig it out everyday and question it.
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 navbar:
 
 
@@ -8,6 +57,7 @@ selftalk.ai
 
 
                     SelfTalkAI fades in when user lands on the page
+
 
                 Audio wave animation plays behind the self talk ai hero
 

@@ -50,13 +50,17 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        backlightCenter: "#171717",
-        backlightEdge: "#171717", // This is a slightly darker shade
+        // backlightCenter: "#171717", F5F5F5
+        backlightCenter: "hsl(var(--backlight))",
+        backlightEdge: "hsl(var(--backlight))", // This is a slightly darker shade
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        backlight: "0 2px 10px 5px rgb(0 0 0 / 0.3)",
       },
       keyframes: {
         "accordion-down": {
@@ -71,15 +75,22 @@ module.exports = {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        loader: {
+          to: {
+            opacity: 0.1,
+            // transform: "translate3d(0, -0.1rem, 0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         fadeIn: "fadeIn 2s ease-in forwards",
+        loader: "loader 0.6s infinite alternate",
       },
       backgroundImage: {
         "backlight-gradient":
-          "radial-gradient(circle at center, transparent 40%, #171717 100%)",
+          "radial-gradient(circle at center, transparent 40%, hsl(var(--backlight)) 100%)",
       },
     },
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { StepCard } from "@/components/step-card";
+import { StepCard } from "@/components/landing/step-card";
 import { cn } from "@/lib/utils";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
@@ -27,7 +27,7 @@ function DemoContainer({
 const steps = [
   {
     title: "1. Train Your Voice",
-    label: " teaching our AI your unique voice pattern.",
+    label: "Train our AI your unique voice pattern.",
     icon: <Microphone />,
   },
   {
@@ -71,12 +71,12 @@ const Steps = () => {
               Begin Your Self-Talk Journey Today in 3 Simple Steps
             </h1>
             {/* <div className="flex"> */}
-            <div className="flex flex-col max-w-sm self-center md:max-w-none items-start justify-center w-full md:justify-center gap-6 rounded-lg p-8 md:grid md:grid-cols-3 xl:grid-cols-3">
+            <div className="flex flex-col max-w-sm self-center md:max-w-none items-start justify-center w-full gap-10 lg:gap-40 rounded-lg p-8 md:grid md:grid-cols-3 xl:grid-cols-3">
               {steps.map((step, idx) => (
                 <div
                   key={idx}
                   className={cn(
-                    `col-span-2 grid items-start gap-6 md:col-span-1 animate-fade-up animate-once animate-delay-[${
+                    `col-span-2 border rounded-xl w-full bg-accent/20 grid items-start gap-6 md:col-span-1 animate-fade-up animate-once animate-delay-[${
                       (idx + 1) * 500
                     }ms]`
                   )}

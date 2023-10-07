@@ -10,7 +10,7 @@ import {
 import dynamic from "next/dynamic";
 import AudioWave from "./audiowave";
 import DotsBackground from "./dots";
-import ExpandingArrow from "./ui/expanding-arrow";
+import ExpandingArrow from "../ui/expanding-arrow";
 import Link from "next/link";
 
 const HeroScroll = () => {
@@ -58,7 +58,7 @@ const HeroScroll = () => {
       <motion.section
         style={{ opacity }}
         ref={targetRef}
-        className="hero mt-[-50px] mb-[8rem] h-screen text-white"
+        className="hero mt-[-50px] mb-[8rem] h-screen text-primary"
       >
         <motion.div
           style={{ scale, x: "-50%", position }}

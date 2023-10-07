@@ -1,5 +1,5 @@
-import { Input } from "./ui/input";
-import { CopyButton } from "./copy-button";
+import { Input } from "../ui/input";
+import { CopyButton } from "../copy-button";
 import { UUID } from "crypto";
 
 type WaitlistProps = {

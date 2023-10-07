@@ -1,10 +1,10 @@
 "use client";
 
-import UseCaseCard from "@/components/use-case-card";
+import UseCaseCard from "@/components/landing/use-case-card";
 import { cn } from "@/lib/utils";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import CardWithImage from "./ui/card-with-image";
+import CardWithImage from "../ui/card-with-image";
 
 function DemoContainer({
   className,
@@ -84,7 +84,7 @@ const UseCases = () => {
               usecaseData.map((usecase, idx) => (
                 <CardWithImage
                   key={idx}
-                  className="bg-transparent"
+                  className="bg-transparent h-[200px]"
                   title={usecase.title}
                   description={usecase.description}
                   body={usecase.body}

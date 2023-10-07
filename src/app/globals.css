@@ -35,8 +35,8 @@
   background-image: radial-gradient(
     /* circle farthest-side at var(--x, 100px) var(--y, 100px), */ circle
       farthest-side at 50% 50%,
-    #171717 0%,
-    transparent 100%
+    var(--background-gradient-start) 0%,
+    /* var(--background-gradient-mid) 40%, */ transparent 100%
   );
   display: flex;
   align-items: center;
@@ -82,6 +82,16 @@
     --gradY: 50%;
     --c1: rgba(168, 239, 255, 1);
     --c2: rgba(168, 239, 255, 0.1);
+
+    --backlight: 0 0% 96%;
+
+    /* Waiting List Btn */
+    --background-gradient-start: #f5f5f5;
+    --background-gradient-mid: #efefef;
+    --background-gradient-end: #f5f5f5;
+    /* --border-angle: 0deg; */
+    --bg-waiting-list: #fff;
+    --hero-bg-gradient: #6b6b6b;
   }
 
   .dark {
@@ -112,6 +122,15 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+
+    --backlight: 0 0% 9%;
+
+    /* Waiting List Btn */
+    --background-gradient-start: #171717;
+    --background-gradient-mid: #231f20;
+    --background-gradient-end: #171717;
+    --bg-waiting-list: #000;
+    --hero-bg-gradient: #37af8c;
   }
 }
 
@@ -150,37 +169,17 @@
   animation: beat 1s infinite;
 }
 
-.hero-body {
-  background: #151515;
-  margin: 2rem 0;
-  background-position: top left, top right;
-  color: #37af8c;
-  font-family: "Exo 2", sans-serif;
-  font-size: 18px;
-  text-shadow: 0 0 4px #37af8c;
-}
-
-.hero-body:after {
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0) 40%,
-    rgba(0, 0, 0, 0.2) 80%
-  );
-  background-size: 5px 3px;
-  display: block;
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
+/* Not Used */
 .graph {
-  /* outline: 1px #37af8c solid; */
-  box-shadow: 0 0 4px #37af8c;
+  /* outline: 1px var(--hero-bg-gradient) solid; */
+  box-shadow: 0 0 4px var(--hero-bg-gradient);
   padding: 0;
-  background: linear-gradient(90deg, #231f20 0, #37af8c 50%, #231f20 50%);
+  background: linear-gradient(
+    90deg,
+    var(--background-gradient-mid) 0,
+    var(--hero-bg-gradient) 50%,
+    var(--background-gradient-mid) 50%
+  );
   animation: travel 6s infinite linear;
   display: flex;
   background-size: 100% auto;
@@ -302,17 +301,18 @@
   /* height: 50vmin; */
   background-image: conic-gradient(
       from var(--border-angle),
-      #000,
-      #000 50%,
-      #000
+      var(--bg-waiting-list),
+      var(--bg-waiting-list) 50%,
+      var(--bg-waiting-list)
     ),
     conic-gradient(
       from var(--border-angle),
       /* transparent 40%, */
         /* rgba(168, 239, 255, 1),
-      rgba(168, 239, 255, 1) */ #231f20 0,
-      #37af8c 50%,
-      #231f20 80%
+      rgba(168, 239, 255, 1) */
+        var(--background-gradient-mid) 0,
+      var(--hero-bg-gradient) 50%,
+      var(--background-gradient-mid) 80%
     );
   background-size: calc(100% - (var(--border-size) * 2))
       calc(100% - (var(--border-size) * 2)),
@@ -342,12 +342,6 @@
   justify-content: center;
   height: 100%;
 }
-
-/* #wave {
-  height: 250px;
-  width: 500px;
-  fill: hsl(var(--accent));
-} */
 
 #wave {
   position: absolute;
@@ -475,4 +469,95 @@
     transform: scaleY(2);
     transform-origin: 50% 50%;
   }
+}
+
+.circular-progress {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.circular-progress::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #37af8c; /* Color for the progress */
+  transform-origin: center center;
+  transform: rotate(
+    var(--progress, 0deg)
+  ); /* Set the rotation angle based on --progress */
+  transition: transform 0.2s ease-in-out;
+}
+
+.circle {
+  @apply w-2 h-2 my-4 mx-1 bg-gray-500 rounded-full;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.playback-button {
+  transition: 0.2s;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--background-gradient-start);
+  display: flex;
+  /* align-self: flex-start; */
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 32px;
+  cursor: pointer;
+}
+
+.playback-button svg {
+  transition: 0.2s;
+  width: 10px;
+  height: 10px;
+  color: #54b1c1;
+}
+
+.playback-button:hover svg {
+  width: 10px;
+  height: 10px;
+  color: #73e7fb;
+  transform: scale(1.03);
+}
+
+.timebar {
+  flex: 1 1;
+  margin-top: 12px;
+}
+
+.timebar-bar {
+  height: 2px;
+}
+
+.timebar-circle {
+  background-color: #54b1c1;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  transform: translate(-50%, calc(-50% + 2px));
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.timebar-time-info {
+  margin-top: 8px;
+  font-size: 11px;
+  color: lightgrey;
+  display: flex;
+  justify-content: space-between;
 }

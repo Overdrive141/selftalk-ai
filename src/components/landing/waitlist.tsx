@@ -1,8 +1,8 @@
 "use client";
 
 import { Suspense, useEffect, useState, useTransition } from "react";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -11,12 +11,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from "../ui/form";
 import WaitlistResult from "./waitlist-form";
 import { db } from "@/lib/kysely";
 import { joinWaitlist } from "@/lib/actions";
 
-import Loader from "./ui/loader";
+import Loader from "../ui/loader";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import * as z from "zod";
@@ -100,7 +100,7 @@ export default function Waitlist() {
             <div className="p-0 md:px-10 self-center mt-5 md:mt-0">
               <Button
                 variant="ghost"
-                className="border waiting-list-btn hover:bg-white hover:bg-image"
+                className="border waiting-list-btn hover:bg-backlight-gradient hover:text-primary/50 hover:blur-xs"
                 // onClick={() => setIsSubmitted(fatruelse)}
                 type="submit"
               >

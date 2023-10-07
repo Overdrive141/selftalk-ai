@@ -21,8 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-background text-foreground">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <Navbar />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Footer />
         </ThemeProvider>

@@ -24,7 +24,7 @@ const DotBackground: React.FC = () => {
           cx={`${j * spacing}px`}
           cy={`${i * spacing}px`}
           r="1"
-          className="fill-current text-white animate-pulse animate-infinite"
+          className="fill-current text-primary animate-pulse animate-infinite"
           // style={{ animationDelay: `${delay}s` }}
         />
       );

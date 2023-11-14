@@ -4,23 +4,28 @@ import { Database } from "../database.types";
 
 interface ProfileDataProps {
   id: string;
-  usernamed: string | null;
+  username: string | null;
   full_name: string | null;
   avatar_url: string | null;
   website: string | null;
   voice_id: string | null;
 }
 
-export const useCurrentUser = (userId: string | undefined) => {
+export const useCurrentUser = () => {
   const supabase = createClientComponentClient<Database>();
   const [profileData, setProfileData] = useState<ProfileDataProps | null>(null);
 
   const getProfile = useCallback(async () => {
     try {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
       const { data, error, status } = await supabase
         .from("profiles")
         .select()
-        .eq("id", userId!)
+        .eq("id", session?.user.id!)
         .single();
 
       if (error && status !== 406) {
@@ -33,11 +38,11 @@ export const useCurrentUser = (userId: string | undefined) => {
     } catch (error) {
       alert("Error loading user data!");
     }
-  }, [userId, supabase]);
+  }, [supabase]);
 
   useEffect(() => {
-    if (userId) getProfile();
-  }, [userId, getProfile]);
+    getProfile();
+  }, [getProfile]);
 
-  return profileData;
+  return { currentUser: profileData, refetch: getProfile };
 };

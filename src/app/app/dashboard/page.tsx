@@ -24,21 +24,9 @@ const DashboardPage = () => {
   const [open, setOpen] = useState(false);
 
   const [voiceRegistered, setVoiceRegistered] = useState(false);
-  const [userId, setUserId] = useState<string | undefined>(undefined);
 
   // User profile object (not used currently)
-  const currentUser = useCurrentUser(userId);
-  const supabase = createClientComponentClient<Database>();
-
-  useEffect(() => {
-    async function fetchUserId() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUserId(session?.user.id);
-    }
-    fetchUserId();
-  }, [userId]);
+  const { currentUser, refetch } = useCurrentUser();
 
   useEffect(() => {
     if (currentUser && currentUser.voice_id) {
@@ -46,9 +34,9 @@ const DashboardPage = () => {
     }
   }, [currentUser]);
 
-  if (!userId) {
-    return <LoadingOverlay />;
-  }
+  useEffect(() => {
+    if (voiceRegistered) refetch();
+  }, [voiceRegistered]);
 
   return (
     <div className="flex max-w-screen flex-col space-y-12 p-8 items-center">

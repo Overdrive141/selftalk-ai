@@ -3,6 +3,7 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import SiteLogo from "@/components/ui/site-logo";
+import { useCurrentUser } from "@/lib/hooks/use-current-user";
 import { cn } from "@/lib/utils";
 import {
   FileCode2,
@@ -32,11 +33,13 @@ const externalLinks = [
     name: "Privacy Policy",
     href: "https://selftalk.ai/privacy",
     icon: <HelpCircleIcon width={18} />,
+    isDisabled: true,
   },
   {
     name: "Read the guide",
     href: "/guide",
     icon: <FileCode2 width={18} />,
+    isDisabled: true,
   },
   //   {
   //     name: 'Changelog & Roadmap',
@@ -51,6 +54,12 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
   const segments = useSelectedLayoutSegments();
 
   console.log(segments);
+
+  const { currentUser, refetch } = useCurrentUser();
+
+  useEffect(() => {
+    refetch();
+  }, [pathname]);
 
   // when url is "/conversation/id"
   const { id } = useParams() as { id?: string };
@@ -99,9 +108,11 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
         href: "/app/conversations",
         // isActive: segments[0] === "conversations",
         isActive: false,
+        isDisabled: currentUser?.voice_id ? false : true,
         icon: <HistoryIcon width={18} />,
         child: [
           {
+            isDisabled: currentUser?.voice_id ? false : true,
             isActive: segments[0] === "conversations",
             name: "Personal Life Coach",
             href: "/app/conversations", // change this to an id later, every user's conversations will be stored as ids which will be foreign key for templates
@@ -111,6 +122,7 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
       {
         name: "Settings",
         href: "/app/settings",
+        isDisabled: true,
         isActive: segments[0] === "settings",
         icon: <Settings width={18} />,
       },
@@ -156,7 +168,7 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
           </div>
 
           <div className="grid gap-1">
-            {tabs.map(({ name, href, isActive, icon, child }) => (
+            {tabs.map(({ name, href, isActive, isDisabled, icon, child }) => (
               <>
                 <Link
                   key={name}
@@ -167,7 +179,10 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
                       isActive
                         ? "bg-accent-foreground/20  dark:bg-stone-700"
                         : ""
-                    } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-accent-foreground/20 active:bg-accent-foreground/20  dark:hover:bg-stone-700 dark:active:bg-stone-800`
+                    } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-accent-foreground/20 active:bg-accent-foreground/20  dark:hover:bg-stone-700 dark:active:bg-stone-800`,
+                    isDisabled
+                      ? "opacity-50 cursor-not-allowed blur-[1px] pointer-events-none"
+                      : ""
                   )}
                 >
                   {icon}
@@ -177,14 +192,17 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
                 {child?.map((item) => (
                   <Link
                     key={item.name}
-                    href={item.href}
+                    href={item.isDisabled ? "#" : item.href}
                     className={cn(
                       buttonVariants({ variant: "ghost" }),
                       `flex justify-start items-center  ${
                         item.isActive
                           ? "bg-accent-foreground/20  dark:bg-stone-700"
                           : ""
-                      } rounded-lg px-4 ml-6 pl-6 transition-all duration-150 ease-in-out hover:bg-accent-foreground/20 active:bg-accent-foreground/20  dark:hover:bg-stone-700 dark:active:bg-stone-800`
+                      } rounded-lg px-4 ml-6 pl-6 transition-all duration-150 ease-in-out hover:bg-accent-foreground/20 active:bg-accent-foreground/20  dark:hover:bg-stone-700 dark:active:bg-stone-800`,
+                      item.isDisabled
+                        ? "opacity-50 cursor-not-allowed blur-[1px] pointer-events-none"
+                        : ""
                     )}
                   >
                     {item.name}
@@ -200,13 +218,17 @@ const SidebarNav = ({ className, children, ...props }: SidebarNavProps) => {
 
         <div>
           <div className="grid gap-1">
-            {externalLinks.map(({ name, href, icon }) => (
+            {externalLinks.map(({ name, href, icon, isDisabled }) => (
               <a
                 key={name}
-                href={href}
-                target="_blank"
+                href="javascript:void(0);"
+                // href={href}
+                // target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-accent-foreground/20 active:bg-accent-foreground/20 dark:hover:bg-stone-700 dark:active:bg-stone-800"
+                className={cn(
+                  "flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-accent-foreground/20 active:bg-accent-foreground/20 dark:hover:bg-stone-700 dark:active:bg-stone-800",
+                  isDisabled ? "opacity-50 cursor-not-allowed blur-[1px]" : ""
+                )}
               >
                 <div className="flex items-center space-x-3">
                   {icon}

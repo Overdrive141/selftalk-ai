@@ -8,7 +8,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+
 import {
   Dispatch,
   MouseEvent,
@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Teleprompter from "@/components/teleprompter";
 import { StopIcon } from "@radix-ui/react-icons";
-import { DialogClose } from "@radix-ui/react-dialog";
+
 import { useReactMediaRecorder } from "react-media-recorder";
 
 const INITIAL_TEXT = `

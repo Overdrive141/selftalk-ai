@@ -4,13 +4,14 @@ import { TrainingModal } from "./components/training-modal";
 import { OnboardingCard } from "./components/onboarding-card";
 import { HistoryIcon, Mic2Icon, PhoneCallIcon } from "lucide-react";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ConversationTemplatesModal } from "./components/conversation-templates-modal";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
 import Loader from "@/components/ui/loader";
 import { useCurrentUser } from "@/lib/hooks/use-current-user";
 import LoadingOverlay from "@/components/ui/loading-overlay";
+import dynamic from "next/dynamic";
 
 const DashboardPage = () => {
   const [open, setOpen] = useState(false);
@@ -48,20 +49,22 @@ const DashboardPage = () => {
         <h3 className="text-lg font-medium">Dashboard</h3>
       </div>
       <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0 lg:grid-cols-5 items-center w-full ">
-        <OnboardingCard
-          description="Click to get started"
-          title="1. Register Your Voice"
-          isEnabled={!voiceRegistered}
-          icon={<Mic2Icon width={40} height={40} />}
-          open={open}
-          setOpen={setOpen}
-        >
-          <TrainingModal
+        <Suspense fallback={<LoadingOverlay />}>
+          <OnboardingCard
+            description="Click to get started"
+            title="1. Register Your Voice"
+            isEnabled={!voiceRegistered}
+            icon={<Mic2Icon width={40} height={40} />}
+            open={open}
+            setOpen={setOpen}
+          >
+            {/* <TrainingModal
             setOpen={setOpen}
             open={open}
             setVoiceRegistered={setVoiceRegistered}
-          />
-        </OnboardingCard>
+          /> */}
+          </OnboardingCard>
+        </Suspense>
 
         <div className="justify-center hidden lg:flex">
           <svg

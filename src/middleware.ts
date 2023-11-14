@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
   const supabase = createMiddlewareClient({ req: request, res });
 
   // Dont remember why I added this
-  // res.headers.set("x-middleware-cache", "no-cache"); // Disables middleware caching
+  res.headers.set("x-middleware-cache", "no-cache"); // Disables middleware caching
 
   const {
     data: { user },

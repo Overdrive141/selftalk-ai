@@ -1,5 +1,9 @@
 import { Database } from "@/lib/database.types";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import {
+  createRouteHandlerClient,
+  Session,
+  SupabaseClient,
+} from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { addConversation } from "../conversations/route";
@@ -23,7 +27,23 @@ export async function POST(request: Request) {
     // submit response from model to elevel labs.
     // display Thinking... animation to user
 
-    const voice_id = "Zt6zCQ50RGE1uL1yWlZC";
+    // Fetching voice id
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient<Database>({
+      cookies: () => cookieStore,
+    });
+    const {
+      data: { session },
+      error: userError,
+    } = await supabase.auth.getSession();
+
+    const { data: voiceIdData, error: voiceIdError } = await supabase
+      .from("profiles")
+      .select("voice_id")
+      .eq("id", session?.user.id!)
+      .single();
+    const voice_id = voiceIdData?.voice_id;
+    // console.log("voiceId", voice_id);
 
     const bodyText = await request.json(); // { msg, conversationTypeId }
     console.log(bodyText);
@@ -54,23 +74,19 @@ export async function POST(request: Request) {
     const audioResponseBuffer = await response.arrayBuffer();
     const audioBuffer = Buffer.from(audioResponseBuffer);
 
-    const cookieStore = cookies();
-    const supabase = createRouteHandlerClient<Database>({
-      cookies: () => cookieStore,
-    });
+    const { data, error } = await uploadAudioToSupabase(
+      supabase,
+      session!,
+      audioBuffer
+    );
 
-    const {
-      data: { session },
-      error: userError,
-    } = await supabase.auth.getSession();
+    // const fileName = `${session?.user.id}/${Date.now()}`;
 
-    const fileName = `${session?.user.id}/${Date.now()}`;
-
-    const { data, error } = await supabase.storage
-      .from("audio")
-      .upload(fileName, audioBuffer, {
-        contentType: "audio/mpeg",
-      });
+    // const { data, error } = await supabase.storage
+    //   .from("audio")
+    //   .upload(fileName, audioBuffer, {
+    //     contentType: "audio/mpeg",
+    //   });
 
     // upload the file
     // successful upload => return the blob back to user & save it to conversations table
@@ -96,6 +112,11 @@ export async function POST(request: Request) {
         bodyText.conversationTypeId
       );
 
+      await supabase.rpc("incrementconversationcount", {
+        x: 1,
+        row_id: session?.user.id!,
+      });
+
       return new NextResponse(audioBuffer, {
         headers: {
           "Content-Type": "audio/mpeg", // Set the correct content type
@@ -107,3 +128,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: err.message }, { status: 400 });
   }
 }
+
+export const uploadAudioToSupabase = async (
+  supabase: SupabaseClient,
+  session: Session,
+  audioBuffer: Buffer
+) => {
+  const fileName = `${session?.user.id}/${Date.now()}`;
+
+  return await supabase.storage.from("audio").upload(fileName, audioBuffer, {
+    contentType: "audio/mpeg",
+  });
+};

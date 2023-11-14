@@ -25,6 +25,9 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import { StopIcon } from "@radix-ui/react-icons";
 import { Mic } from "lucide-react";
 import { useReactMediaRecorder } from "react-media-recorder";
+import { webmFixDuration } from "webm-fix-duration";
+import fixWebM from "webm-duration-fix";
+import { useConversations } from "@/lib/hooks/use-conversations";
 
 export interface AudioResource {
   blob: string;
@@ -50,6 +53,8 @@ const Conversations = () => {
 
   const [customMessages, setCustomMessages] = useState<any>([]);
 
+  const { convNumber, convLimit, refetch } = useConversations();
+
   useEffect(() => {
     async function fetchConversations() {
       console.log("Testing Conversation API");
@@ -60,7 +65,8 @@ const Conversations = () => {
 
         const { conversations, conversationsRaw } = await response.json();
 
-        console.log(conversations);
+        // console.log(conversations);
+
         setIsLoading(false);
 
         // TODO: Also call setMessages from Open AI here so it can have the context for the next messages
@@ -109,6 +115,8 @@ const Conversations = () => {
           return customMessage;
         });
       });
+
+      refetch();
 
       setIsConverting(false);
 
@@ -175,7 +183,7 @@ const Conversations = () => {
   const id = "random-1"; // used to identify chats
 
   return (
-    <div className="relative flex max-w-screen-xl flex-col space-y-12 pt-8 px-8 flex-1 h-full">
+    <div className="relative flex max-w-screen flex-col space-y-12 pt-8 px-8 flex-1 h-full">
       {isLoading ? (
         <LoadingOverlay />
       ) : (
@@ -211,6 +219,8 @@ const Conversations = () => {
             setMessages={setMessages}
             setIsConverting={setIsConverting}
             isLoading={isConverting}
+            convLimit={convLimit}
+            convNumber={convNumber}
           />
         </>
       )}{" "}
@@ -290,6 +300,8 @@ export interface ChatPanelProps
   setCustomMessages: Dispatch<any>;
   setMessages: (messages: Message[]) => void;
   setIsConverting: Dispatch<boolean>;
+  convLimit: number;
+  convNumber: number;
 }
 
 function ChatPanel({
@@ -303,74 +315,96 @@ function ChatPanel({
   setMessages,
   setIsConverting,
   setCustomMessages,
+  convLimit,
+  convNumber,
 }: ChatPanelProps) {
   /**
    * media blob url => converted to audioBlob and sent in API to whisper for transcription from frontend
    *
    */
 
-  // const {
-  //   startRecording,
-  //   stopRecording,
-  //   togglePauseResume,
-  //   recordingBlob,
-  //   isRecording,
-  //   isPaused,
-  //   recordingTime,
-  //   mediaRecorder,
-  // } = useAudioRecorder();
+  let startTime: number = 0;
+  let duration: number = 0;
 
   // whisper request
-  const whisperRequest = async (audioFile: Blob) => {
-    console.log(audioFile.type);
+  const whisperRequest = async (audioFile: File) => {
+    console.log(audioFile.type, "?");
+
     const formData = new FormData();
-    formData.append("file", audioFile, "audio.wav");
+
+    formData.append("conversationTypeId", "1");
+    formData.append("file", audioFile, "audio.webm");
     try {
       const response = await fetch("/api/convert-stt", {
         method: "POST",
         body: formData,
       });
-      const { text, error } = await response.json();
+
       if (response.ok) {
-        append(text);
+        const { result } = await response.json();
+        const messageToAppend = {
+          id,
+          content: result,
+          role: "user",
+        } as Message;
+        await append(messageToAppend);
       } else {
-        console.log("Something went wrong", JSON.stringify(error));
+        console.error("Something went wrong", JSON.stringify(response));
       }
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
 
       if (typeof error === "string") {
         // setError(error);
-        console.log("Error:", error);
+        console.error("Error:", error);
       }
       if (error instanceof Error) {
         // setError(error.message);
-        console.log("Error:", error);
+        console.error("Error:", error);
       }
-      console.log("Error:", error);
+      console.error("Error:", error);
     }
   };
 
-  const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
-    useReactMediaRecorder({
-      audio: true,
-      mediaRecorderOptions: { mimeType: "audio/wav" },
-      blobPropertyBag: { type: "audio/mpeg" },
-    });
+  // const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
+  //   useReactMediaRecorder({
+  //     audio: true,
+  //     mediaRecorderOptions: { mimeType: "audio/webm" },
+  //     blobPropertyBag: { type: "audio/webm" },
+  //   });
+
+  const {
+    startRecording,
+    stopRecording,
+    togglePauseResume,
+    recordingBlob,
+    isRecording,
+    isPaused,
+    recordingTime,
+    mediaRecorder,
+  } = useAudioRecorder();
 
   useEffect(() => {
-    if (!mediaBlobUrl) return;
+    if (!recordingBlob) return;
 
     (async () => {
       // User recorded an audio instead of typing
 
-      const audioBlob = await fetch(mediaBlobUrl).then((audio) => audio.blob());
-      const file = new File([audioBlob], `test.wav`, {
-        type: "audio/wav",
+      // const audioBlob = await fetch(mediaBlobUrl).then((audio) => audio.blob());
+      // const audioBlob = new Blob()
+      // const fixedAudioBlob = await webmFixDuration(
+      //   recordingBlob,
+      //   duration,
+      //   "audio/webm"
+      // );
+      const fixedAudioBlob = await fixWebM(recordingBlob);
+
+      const file = new File([fixedAudioBlob], `test.webm`, {
+        type: "audio/webm",
         lastModified: Date.now(),
       });
 
-      const wavFile = URL.createObjectURL(file);
+      const wavFile = URL.createObjectURL(fixedAudioBlob);
       // const audioRecordingUrl = URL.createObjectURL(recordingBlob);
       const newUserAudioRecording = {
         id,
@@ -384,17 +418,23 @@ function ChatPanel({
         { role: "assistant", content: "temp" }, // loading state for agent response
       ]);
       // const audioBlob = await fetch(mediaBlobUrl).then((audio) => audio.blob());
-      await whisperRequest(audioBlob);
+      await whisperRequest(file);
     })();
 
-    // record();
-
     // recordingBlob will be present at this point after 'stopRecording' has been called
-  }, [mediaBlobUrl]);
+  }, [recordingBlob]);
 
   return (
     <div className="w-full relative flex justify-between border overflow-y-auto gap-4 pr-4 items-center bg-black shadow-backlight shadow-slate-400">
       {/* <div className="flex gap-4 w-full"> */}
+      {/* <div className="w-full border relative bg-white"> */}
+
+      {convNumber >= convLimit && (
+        <div className="text-lg font-extralight w-full h-full z-50 absolute  backdrop-blur-sm backdrop-brightness-105 backdrop-filter  text-white justify-center flex items-center">
+          You have used all 3/3 free conversations for this demo.
+        </div>
+      )}
+
       <PromptForm
         onSubmit={async (value) => {
           const messageToAppend = {
@@ -416,28 +456,28 @@ function ChatPanel({
         setInput={setInput}
         isLoading={isLoading}
       />
-      {/* <AudioRecorder
-        onRecordingComplete={(audioBlob) => console.log("complete")}
-        classes={{
-          AudioRecorderClass: "bg-black",
-          AudioRecorderStartSaveClass: "bg-black text-white",
-        }}
-        showVisualizer={false}
-      /> */}
+
       <Button
         size="icon"
         variant="outline"
         className="rounded-full border-2 "
         onClick={
-          status === "recording" ? () => stopRecording() : startRecording
+          // status === "recording"
+          isRecording
+            ? () => {
+                duration = Date.now() - startTime;
+                stopRecording();
+                console.log(duration);
+              }
+            : () => {
+                startRecording();
+                startTime = Date.now();
+              }
         }
         // disabled={!allowStop}
       >
-        {status === "recording" ? (
-          <StopIcon color="red" />
-        ) : (
-          <Mic color="green" />
-        )}
+        {/* {status === "recording" */}
+        {isRecording ? <StopIcon color="red" /> : <Mic color="green" />}
       </Button>
       {/* <p
           className={cn(
@@ -446,8 +486,8 @@ function ChatPanel({
         >
           Powered by ElevenLabs & OpenAI .
         </p> */}
+      {/* </div> */}
     </div>
-    // </div>
   );
 }
 

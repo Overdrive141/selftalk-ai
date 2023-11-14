@@ -4,24 +4,54 @@ import { TrainingModal } from "./components/training-modal";
 import { OnboardingCard } from "./components/onboarding-card";
 import { HistoryIcon, Mic2Icon, PhoneCallIcon } from "lucide-react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConversationTemplatesModal } from "./components/conversation-templates-modal";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/database.types";
+import Loader from "@/components/ui/loader";
+import { useCurrentUser } from "@/lib/hooks/use-current-user";
+import LoadingOverlay from "@/components/ui/loading-overlay";
 
 const DashboardPage = () => {
   const [open, setOpen] = useState(false);
 
   const [voiceRegistered, setVoiceRegistered] = useState(false);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+
+  // User profile object (not used currently)
+  const currentUser = useCurrentUser(userId);
+  const supabase = createClientComponentClient<Database>();
+
+  useEffect(() => {
+    async function fetchUserId() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setUserId(session?.user.id);
+    }
+    fetchUserId();
+  }, [userId]);
+
+  useEffect(() => {
+    if (currentUser && currentUser.voice_id) {
+      setVoiceRegistered(true);
+    }
+  }, [currentUser]);
+
+  if (!userId) {
+    return <LoadingOverlay />;
+  }
 
   return (
-    <div className="flex max-w-screen-xl flex-col space-y-12 p-8">
-      <div className="flex justify-between">
+    <div className="flex max-w-screen flex-col space-y-12 p-8 items-center">
+      <div className="flex justify-between self-start">
         <h3 className="text-lg font-medium">Dashboard</h3>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0 lg:grid-cols-5 items-center w-full ">
+      <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-0 lg:grid-cols-5 items-center w-full ">
         <OnboardingCard
           description="Click to get started"
           title="1. Register Your Voice"
-          isEnabled={true}
+          isEnabled={!voiceRegistered}
           icon={<Mic2Icon width={40} height={40} />}
           open={open}
           setOpen={setOpen}

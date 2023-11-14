@@ -17,7 +17,7 @@ export default function LoadingOverlay() {
             cy="10"
             r="8"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
           ></circle>
           <path
             className="opacity-75"

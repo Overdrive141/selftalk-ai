@@ -41,13 +41,17 @@ One small positive thought in the morning can change my whole day. So, today I r
 I set goals and go after them with all the determination I can muster. When I do this, my own skills and talents will take me to places that amaze me.
 Happiness is a choice, and today I choose to be happy.`;
 
-interface TrainingModalProps extends React.ComponentPropsWithoutRef<"div"> {
+export interface TrainingModalProps
+  extends React.ComponentPropsWithoutRef<"div"> {
   setOpen: Dispatch<SetStateAction<boolean>>;
   setVoiceRegistered: Dispatch<SetStateAction<boolean>>;
   open: boolean;
 }
 
-const TrainingModal = ({ setOpen, setVoiceRegistered }: TrainingModalProps) => {
+export const TrainingModal = ({
+  setOpen,
+  setVoiceRegistered,
+}: TrainingModalProps) => {
   const [listening, setListening] = useState(false);
   const [words, setWords] = useState(INITIAL_TEXT.split(" "));
   const [progress, setProgress] = useState(0);
@@ -202,5 +206,3 @@ const TrainingModal = ({ setOpen, setVoiceRegistered }: TrainingModalProps) => {
     </>
   );
 };
-
-export { TrainingModal };

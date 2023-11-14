@@ -1,6 +1,6 @@
 "use client";
 
-import { TrainingModal } from "./components/training-modal";
+import { TrainingModalProps } from "./components/training-modal";
 import { OnboardingCard } from "./components/onboarding-card";
 import { HistoryIcon, Mic2Icon, PhoneCallIcon } from "lucide-react";
 
@@ -8,10 +8,17 @@ import { Suspense, useEffect, useState } from "react";
 import { ConversationTemplatesModal } from "./components/conversation-templates-modal";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
-import Loader from "@/components/ui/loader";
+
 import { useCurrentUser } from "@/lib/hooks/use-current-user";
 import LoadingOverlay from "@/components/ui/loading-overlay";
 import dynamic from "next/dynamic";
+
+const TrainingModal = dynamic<TrainingModalProps>(
+  () => import("./components/training-modal").then((mod) => mod.TrainingModal),
+  {
+    ssr: false,
+  }
+);
 
 const DashboardPage = () => {
   const [open, setOpen] = useState(false);
@@ -58,11 +65,11 @@ const DashboardPage = () => {
             open={open}
             setOpen={setOpen}
           >
-            {/* <TrainingModal
-            setOpen={setOpen}
-            open={open}
-            setVoiceRegistered={setVoiceRegistered}
-          /> */}
+            <TrainingModal
+              setOpen={setOpen}
+              open={open}
+              setVoiceRegistered={setVoiceRegistered}
+            />
           </OnboardingCard>
         </Suspense>
 

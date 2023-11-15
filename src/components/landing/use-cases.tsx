@@ -84,7 +84,7 @@ const UseCases = () => {
               usecaseData.map((usecase, idx) => (
                 <CardWithImage
                   key={idx}
-                  className="bg-transparent h-[200px]"
+                  imageClassname="bg-transparent h-[200px]"
                   title={usecase.title}
                   description={usecase.description}
                   body={usecase.body}

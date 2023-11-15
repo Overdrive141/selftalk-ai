@@ -141,26 +141,18 @@ const Features = () => {
             ref={ref}
             className="p-10 relative z-20 mt-12 grid w-full grid-cols-1 gap-12 sm:grid-cols-2 md:flex-row md:gap-20 lg:grid-cols-4"
           >
-            {/* <div className="flex flex-col md:flex-row items-start justify-center gap-6 rounded-lg p-8"> */}
-            {/* <div className="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4"> */}
             {inView &&
               features.map((feature, idx) => (
-                <div
+                <UseCaseCard
                   key={feature.key}
                   className={`rounded-xl border bg-accent/20 shadow-2xl animate-fade-up animate-once flex w-full flex-col gap-3 md:gap-2 animate-delay-[${
                     feature.key * 500
                   }ms]`}
-                >
-                  <DemoContainer>
-                    <UseCaseCard
-                      className="bg-transparent"
-                      title={feature.title}
-                      description={feature.description}
-                      body={feature.body}
-                      icon={undefined}
-                    />
-                  </DemoContainer>
-                </div>
+                  title={feature.title}
+                  description={feature.description}
+                  body={feature.body}
+                  icon={undefined}
+                />
               ))}
             {/* </div> */}
           </div>

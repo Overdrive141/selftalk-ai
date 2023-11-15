@@ -73,24 +73,16 @@ const Steps = () => {
             {/* <div className="flex"> */}
             <div className="flex flex-col max-w-sm self-center md:max-w-none items-start justify-center w-full gap-10 lg:gap-40 rounded-lg p-8 md:grid md:grid-cols-3 xl:grid-cols-3">
               {steps.map((step, idx) => (
-                <div
+                <UseCaseCard
                   key={idx}
-                  className={cn(
-                    `col-span-2 border rounded-xl w-full bg-accent/20 grid items-start gap-6 md:col-span-1 animate-fade-up animate-once animate-delay-[${
-                      (idx + 1) * 500
-                    }ms]`
-                  )}
-                >
-                  <DemoContainer>
-                    <UseCaseCard
-                      className="bg-transparent"
-                      title={step.title}
-                      icon={step.icon}
-                      body=""
-                      description={step.label}
-                    />
-                  </DemoContainer>
-                </div>
+                  className={`h-[200px] col-span-2 border rounded-xl w-full bg-accent/20 grid items-start gap-6 md:col-span-1 animate-fade-up animate-once animate-delay-[${
+                    (idx + 1) * 500
+                  }ms]`}
+                  title={step.title}
+                  icon={step.icon}
+                  body=""
+                  description={step.label}
+                />
               ))}
             </div>
             {/* </div> */}

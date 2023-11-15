@@ -33,15 +33,14 @@ export default function UseCaseCard({
   className,
 }: CardProps) {
   return (
-    <Card className={cn("border-none", className)}>
-      <CardHeader className="space-y-4 max-w-xs">
-        <div className="align-center item-center flex flex-row gap-3 md:gap-4">
-          <CardTitle className=" font-book font-styling font-display md:leading-none text-xl leading-[100%] text-slate-12">
-            {title}
+    <Card className={cn(className)}>
+      <CardHeader className="space-y-4 px-4 h-[200px]">
+        <div className="align-center item-center">
+          <CardTitle className="font-book flex gap-2 items-center font-styling font-display md:leading-none text-[16px] lg:text-md leading-[100%] text-slate-12">
+            {title} {icon && icon}
           </CardTitle>
-          {icon && icon}
         </div>
-        <CardDescription className="sans text-sm leading-[1.6] flex-wrap max-w-md">
+        <CardDescription className="sans text-sm leading-[1.6] flex-wrap overflow-clip">
           {description}
         </CardDescription>
       </CardHeader>

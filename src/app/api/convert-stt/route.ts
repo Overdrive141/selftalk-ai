@@ -1,7 +1,7 @@
 // Import necessary libraries
 import OpenAI from "openai";
 import { exec } from "child_process";
-import fs, { createReadStream } from "fs";
+import fs, { createReadStream, write, writeFileSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import { blob } from "stream/consumers";
 import path from "path";
@@ -30,24 +30,34 @@ export async function POST(request: NextRequest) {
   //   return;
   // }
 
-  console.log("Form Data", formData.get("conversationTypeId"));
-
   let conversationTypeId = formData.get("conversationTypeId") as string;
 
   // // Create form data
   // const formData = new FormData();
   const file = formData.get("file") as File;
 
+  console.log("Form Data", formData.get("conversationTypeId"), file);
+
   const buffer = Buffer.from(await file.arrayBuffer());
   const filename =
     "file" + Date.now() + Math.round(Math.random() * 100000) + ".webm";
 
-  const filepath = `${path.join("tmp", filename)}`;
+  console.log(__dirname, buffer);
+
+  const filepath = `${path.resolve("tmp", filename)}`;
   // const filepath = `/tmp/${filename}`;
 
-  fs.writeFileSync(filepath, buffer);
+  try {
+    if (!fs.existsSync("./tmp")) {
+      fs.mkdirSync("./tmp");
+    }
+    fs.writeFileSync(filepath, buffer);
+  } catch (err) {
+    console.error("Error", err);
+  }
+
   // await writeFile(filepath, buffer);
-  console.log("Here?");
+  console.log("filepath?", filepath);
 
   /**
    * We are going to check the file size here to decide

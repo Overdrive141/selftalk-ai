@@ -44,12 +44,13 @@ export async function POST(request: NextRequest) {
 
   console.log(__dirname, buffer);
 
-  const filepath = `${path.resolve("tmp", filename)}`;
-  // const filepath = `/tmp/${filename}`;
+  const tmpFolder = process.env.NODE_ENV === "development" ? "./tmp" : "/tmp";
+
+  const filepath = `${path.resolve(tmpFolder, filename)}`;
 
   try {
-    if (!fs.existsSync("./tmp")) {
-      fs.mkdirSync("./tmp");
+    if (!fs.existsSync(tmpFolder)) {
+      fs.mkdirSync(tmpFolder);
     }
     fs.writeFileSync(filepath, buffer);
   } catch (err) {

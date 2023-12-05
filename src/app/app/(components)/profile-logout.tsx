@@ -30,18 +30,18 @@ export default async function ProfileLogout() {
         href="#"
         className="flex w-1/2 flex-1 items-center space-x-3 rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800"
       >
-        <Image
+        {/* <Image
           src={
-            "https://pbs.twimg.com/profile_images/1681098319077036032/VnR2W_zT_400x400.jpg"
-            // session.user.image ??
-            // `https://avatar.vercel.sh/${session.user.email}`
+            // "https://pbs.twimg.com/profile_images/1681098319077036032/VnR2W_zT_400x400.jpg"
+            session.user.image ??
+            `https://avatar.vercel.sh/`
           }
           width={40}
           height={40}
           // alt={session.user.name ?? "User avatar"}
           alt="User"
           className="h-6 w-6 rounded-full"
-        />
+        /> */}
         <span className="truncate text-sm font-medium">
           {/* {session.user.name} */}
           {session?.user.email}

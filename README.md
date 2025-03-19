@@ -4,6 +4,9 @@
 
 SelfTalk AI is an open-source platform designed to enhance self-reflection and personal growth by leveraging the power of your own voice and internal dialogues. Developed by 141 Studios, it empowers individuals to explore self-awareness and mindfulness through AI-guided self-talk.
 
+https://github.com/user-attachments/assets/b2b7a05b-d550-4d6c-a7b7-d0e2b9d59af7
+
+
 ## Features
 
 - **AI-Powered Conversational Agent**: Integrates advanced language models, such as OpenAI's GPT-3.5, enabling dynamic, context-aware conversations for meaningful and adaptive self-reflection.
